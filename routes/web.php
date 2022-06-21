@@ -1,6 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Post\IndexController,
+    App\Http\Controllers\Post\DestroyController,
+    App\Http\Controllers\Post\UpdateController,
+    App\Http\Controllers\Post\EditController,
+    App\Http\Controllers\Post\ShowController,
+    App\Http\Controllers\Post\StoreController,
+    App\Http\Controllers\Post\CreateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +24,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/posts', 'App\Http\Controllers\PostsController@index')->name('post.index');
-Route::get('/posts/create', 'App\Http\Controllers\PostsController@create')->name('post.create');;
-
-Route::post('/posts', 'App\Http\Controllers\PostsController@store')->name('post.store');
-Route::get('/posts/{post}', 'App\Http\Controllers\PostsController@show')->name('post.show');
-Route::get('/posts/{post}/edit', 'App\Http\Controllers\PostsController@edit')->name('post.edit');
-Route::patch('/posts/{post}', 'App\Http\Controllers\PostsController@update')->name('post.update');
-Route::delete('/posts/{post}', 'App\Http\Controllers\PostsController@destroy')->name('post.delete');
+Route::group([],function (){
+    Route::get('/posts', IndexController::class)->name('post.index');
+    Route::get('/posts/create', CreateController::class)->name('post.create');;
+    Route::post('/posts', StoreController::class)->name('post.store');
+    Route::get('/posts/{post}', ShowController::class)->name('post.show');
+    Route::get('/posts/{post}/edit', EditController::class)->name('post.edit');
+    Route::patch('/posts/{post}', UpdateController::class)->name('post.update');
+    Route::delete('/posts/{post}', DestroyController::class)->name('post.delete');
+});
 
 Route::get('/posts/update', 'App\Http\Controllers\PostsController@update');
 Route::get('/posts/delete', 'App\Http\Controllers\PostsController@delete');
